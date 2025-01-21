@@ -1,62 +1,68 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import FormField from "../components/FormField";
+import React from "react";
 
-const CreatePost = () => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
-
+const CreatePost = ({
+  handleCreate,
+  handleUpdate,
+  form,
+  isUpdating,
+  handleChange,
+}) => {
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!title || !content) {
-      setError("Both title and content are required");
-      return;
+    if (isUpdating) {
+      handleUpdate(e);
+    } else {
+      handleCreate(e);
     }
-    setError("");
-    console.log("Post created:", { title, content });
-    navigate("/");
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-lg">
-        <h1 className="text-3xl font-semibold text-center mb-6">
-          Create a New Post
-        </h1>
-        <form onSubmit={handleSubmit}>
-          <FormField
+    <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-4">
+        {isUpdating ? "Update Post" : "Create New Post"}
+      </h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label
+            htmlFor="title"
+            className="block text-sm font-semibold text-gray-700"
+          >
+            Title
+          </label>
+          <input
+            type="text"
             id="title"
-            label="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            name="title"
+            value={form.title}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md"
             required
           />
-          <div className="mb-4">
-            <label
-              htmlFor="content"
-              className="block text-lg font-medium text-gray-700"
-            >
-              Content
-            </label>
-            <textarea
-              id="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            ></textarea>
-          </div>
-          {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition-colors"
+        </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="content"
+            className="block text-sm font-semibold text-gray-700"
           >
-            Create Post
-          </button>
-        </form>
-      </div>
+            Content
+          </label>
+          <textarea
+            id="content"
+            name="content"
+            value={form.content}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+        >
+          {isUpdating ? "Update Post" : "Create Post"}
+        </button>
+      </form>
     </div>
   );
 };
