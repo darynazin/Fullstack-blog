@@ -1,4 +1,4 @@
-import { Link, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route, Router } from "react-router-dom";
 import Home from "./src/pages/Home";
 import CreatePost from "./src/pages/CreatePost";
 import PostDetails from "./src/pages/PostDetails";
@@ -103,35 +103,37 @@ function App() {
       </nav>
 
       <main className="p-8">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                posts={posts}
-                handleDelete={handleDelete}
-                setUpdateForm={setUpdateForm}
-              />
-            }
-          />
-          <Route
-            path="/create"
-            element={
-              <CreatePost
-                handleCreate={handleCreate}
-                handleUpdate={handleUpdate}
-                form={form}
-                isUpdating={isUpdating}
-                handleChange={handleChange}
-              />
-            }
-          />
-          <Route
-            path="/post/:id"
-            element={<PostDetails handleDelete={handleDelete} />}
-          />
-          <Route path="/edit/:id" element={<EditPost />} />
-        </Routes>
+        <Router>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  posts={posts}
+                  handleDelete={handleDelete}
+                  setUpdateForm={setUpdateForm}
+                />
+              }
+            />
+            <Route
+              path="/create"
+              element={
+                <CreatePost
+                  handleCreate={handleCreate}
+                  handleUpdate={handleUpdate}
+                  form={form}
+                  isUpdating={isUpdating}
+                  handleChange={handleChange}
+                />
+              }
+            />
+            <Route
+              path="/post/:id"
+              element={<PostDetails handleDelete={handleDelete} />}
+            />
+            <Route path="/edit/:id" element={<EditPost />} />
+          </Routes>
+        </Router>
       </main>
     </div>
   );
