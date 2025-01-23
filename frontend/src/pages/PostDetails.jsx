@@ -22,7 +22,7 @@ function PostDetails() {
 
   return (
     <div className="min-h-screen bg-[#F8F2EA] flex flex-col items-center py-10">
-      <div className="card bg-[#F8F2EA]  w-1/3 shadow-xl mb-5 relative">
+      <div className="card bg-[#F8F2EA] w-1/2 shadow-xl mb-5 relative">
         <button
           onClick={handleClose}
           className="absolute top-2 right-2 text-white bg-gray-800 rounded-full px-2 focus:outline-none"
@@ -30,14 +30,14 @@ function PostDetails() {
           &times;
         </button>
 
-        <figure className="h-[30rem] w-full overflow-hidden">
+        <figure className="h-[25rem] w-full overflow-hidden">
           <img
             src={post.cover}
             alt={post.title}
             className="h-full w-full object-cover"
           />
         </figure>
-        <div className="card-body h-[50px]">
+        <div className="card-body pb-0">
           <h2 className="card-title">{post.title}</h2>
           <p>{post.content}</p>
           <p>Author {post.author}</p>

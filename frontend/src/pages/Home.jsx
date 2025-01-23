@@ -5,7 +5,7 @@ function Home() {
   const { posts } = usePosts();
 
   return (
-    <div className="flex flex-col sm:flex-row flex-wrap justify-center py-10 w-11/12 mx-auto gap-4 max-w-screen-xl my-6">
+    <div className="flex flex-col sm:flex-row flex-wrap justify-center py-10 w-11/12 mx-auto gap-4 max-w-screen-xl mt-6">
       {posts.length === 0 ? (
         <p className="text-center text-gray-500">No entries found.</p>
       ) : (

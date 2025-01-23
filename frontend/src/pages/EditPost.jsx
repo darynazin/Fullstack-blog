@@ -7,12 +7,12 @@ function EditPost() {
 
   return (
     <div className="container mx-auto p-4 w-1/3 mt-16">
-      <h1 className="text-3xl font-bold mb-4 text-center text-white">
+      <h1 className="text-3xl font-bold mb-4 text-center text-gray-500">
         Edit Post
       </h1>
       <form onSubmit={handleUpdate} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-white">Author</label>
+          <label className="block text-sm font-medium">Author</label>
           <input
             type="text"
             name="author"
@@ -24,7 +24,7 @@ function EditPost() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-white">Title</label>
+          <label className="block text-sm font-medium">Title</label>
           <input
             type="text"
             name="title"
@@ -46,7 +46,7 @@ function EditPost() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-white">Cover</label>
+          <label className="block text-sm font-medium">Cover</label>
           <input
             type="text"
             name="cover"
