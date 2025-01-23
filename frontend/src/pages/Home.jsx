@@ -1,29 +1,38 @@
 import { Link } from "react-router-dom";
+import { usePosts } from "../context/PostsContext";
 
-const Home = ({ posts }) => {
+function Home() {
+  const { posts } = usePosts();
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-4xl font-bold text-center mb-8 text-blue-600">
-        Homepage
-      </h1>
-      <ul className="space-y-4">
-        {posts.map((post) => (
-          <li
+    <div className="flex flex-col sm:flex-row flex-wrap justify-center py-10 w-11/12 mx-auto gap-4 max-w-screen-xl my-6">
+      {posts.length === 0 ? (
+        <p className="text-center text-gray-500">No entries found.</p>
+      ) : (
+        posts.map((post) => (
+          <Link
             key={post.id}
-            className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+            to={`/posts/${post.id}`}
+            className="card basis-[calc(30%-1.25rem)] min-w-[400px] sm:min-w-[250px] max-w-[500px] shadow-xl self-center"
           >
-            <Link
-              to={`/post/${post.id}`}
-              className="text-xl text-blue-500 hover:underline"
-            >
-              {post.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+            <figure className="overflow-hidden">
+              <img
+                src={post.cover}
+                alt="Post"
+                className="h-[300px] w-full object-cover"
+              />
+            </figure>
+            <div className="card-body">
+              <h2 className="card-title truncate">{post.title}</h2>
+              <h2 className=" truncate">Author {post.author}</h2>
+              <h2 className=" truncate">{post.content}</h2>
+              <p>{post.date.substring(0, 10)}</p>
+            </div>
+          </Link>
+        ))
+      )}
     </div>
   );
-};
+}
 
 export default Home;

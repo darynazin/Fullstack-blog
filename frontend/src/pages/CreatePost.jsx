@@ -1,70 +1,72 @@
-import React from "react";
+import { usePosts } from "../context/PostsContext";
+import { Link } from "react-router-dom";
 
-const CreatePost = ({
-  handleCreate,
-  handleUpdate,
-  form,
-  isUpdating,
-  handleChange,
-}) => {
-  const handleSubmit = (e) => {
-    if (isUpdating) {
-      handleUpdate(e);
-    } else {
-      handleCreate(e);
-    }
-  };
+function CreatePost({}) {
+  const { handleCreate, handleChange, form } = usePosts();
 
   return (
-    <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">
-        {isUpdating ? "Update Post" : "Create New Post"}
-      </h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label
-            htmlFor="title"
-            className="block text-sm font-semibold text-gray-700"
-          >
-            Title
-          </label>
+    <div className="container mx-auto p-4 w-1/3 mt-16">
+      <h1 className="text-3xl font-bold mb-4 text-center text-gray-500">
+        Create Post
+      </h1>
+      <form onSubmit={handleCreate} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium">Author</label>
           <input
             type="text"
-            id="title"
-            name="title"
-            value={form.title}
+            name="author"
+            placeholder="Author"
+            value={form.author}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md"
+            className="mt-1 p-2 block w-full border rounded"
             required
           />
         </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="content"
-            className="block text-sm font-semibold text-gray-700"
-          >
-            Content
-          </label>
+        <div>
+          <label className="block text-sm font-medium">Title</label>
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            value={form.title}
+            onChange={handleChange}
+            className="mt-1 p-2 block w-full border rounded"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Content</label>
           <textarea
-            id="content"
             name="content"
             value={form.content}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md"
+            className="mt-1 p-2 block w-full border rounded"
             required
           />
         </div>
-
-        <button
-          type="submit"
-          className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-        >
-          {isUpdating ? "Update Post" : "Create Post"}
-        </button>
+        <div>
+          <label className="block text-sm font-medium">Cover</label>
+          <input
+            type="text"
+            name="cover"
+            placeholder="Cover"
+            value={form.cover}
+            onChange={handleChange}
+            className="mt-1 p-2 block w-full border rounded"
+            required
+          />
+        </div>
+        <div className="text-center">
+          <button
+            type="submit"
+            className="px-4 py-2 bg-[#D9C5A8] text-white rounded"
+          >
+            <Link to="/">Create</Link>
+          </button>
+        </div>
       </form>
     </div>
   );
-};
+}
 
 export default CreatePost;
