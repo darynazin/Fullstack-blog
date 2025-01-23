@@ -23,8 +23,8 @@ function PostDetails() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col items-center py-10">
-      <div className="card bg-base-300 w-1/2 shadow-xl mb-5 relative">
+    <div className="min-h-screen bg-[#F8F2EA] flex flex-col items-center py-10">
+      <div className="card bg-[#F8F2EA]  w-1/2 shadow-xl mb-5 relative">
         <button
           onClick={handleClose}
           className="absolute top-2 right-2 text-white bg-gray-800 rounded-full px-2 focus:outline-none"
@@ -32,7 +32,7 @@ function PostDetails() {
           &times;
         </button>
 
-        <figure className="h-[30rem] w-full overflow-hidden">
+        <figure className="h-[40rem] w-full overflow-hidden">
           <img
             src={post.cover}
             alt={post.title}
@@ -40,13 +40,13 @@ function PostDetails() {
           />
         </figure>
         <div className="card-body">
-          <h2 className="card-title text-center">{post.title}</h2>
-          <p className="text-start">{post.content}</p>
-          <p className="text-start">{post.author}</p>
-          <p className="text-start">{post.date}</p>
+          <h2 className="card-title">{post.title}</h2>
+          <p>{post.content}</p>
+          <p>Author {post.author}</p>
+          <p>{post.date.substring(0, 10)}</p>
         </div>
         <div className="card-actions flex flex-row justify-end items-end p-4">
-          <button onClick={() => {handleEdit(); setUpdateForm(post)}} className="btn btn-active mr-2">
+          <button onClick={() => {handleEdit(); setUpdateForm(post)}} className="btn bg-[#D9C5A8] mr-2">
             Edit
           </button>
           <button onClick={handleDelete} className="btn btn-error">
