@@ -1,15 +1,26 @@
 import { usePosts } from "../context/PostsContext";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function CreatePost({}) {
+function CreatePost() {
   const { handleCreate, handleChange, form } = usePosts();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await handleCreate(e);
+      navigate("/");
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
+  };
 
   return (
     <div className="container mx-auto p-4 w-1/3 mt-16">
       <h1 className="text-3xl font-bold mb-4 text-center text-gray-500">
         Create Post
       </h1>
-      <form onSubmit={handleCreate} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium">Author</label>
           <input
@@ -61,7 +72,7 @@ function CreatePost({}) {
             type="submit"
             className="px-4 py-2 bg-[#D9C5A8] text-white rounded"
           >
-            <Link to="/">Create</Link>
+            Create
           </button>
         </div>
       </form>

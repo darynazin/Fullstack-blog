@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -12,7 +12,7 @@ export const PostsProvider = ({ children }) => {
     title: "",
     content: "",
     cover: "",
-    id: ""
+    id: "",
   });
 
   const fetchPosts = async () => {
@@ -42,6 +42,7 @@ export const PostsProvider = ({ children }) => {
 
   const handleCreate = async (e) => {
     e.preventDefault();
+    console.log("Form:", form);
     try {
       await axios.post(`${VITE_BASE_URL}/posts`, {
         author: form.author,
@@ -49,7 +50,7 @@ export const PostsProvider = ({ children }) => {
         content: form.content,
         cover: form.cover,
       });
-      setForm({ author: "", title: "", content: "", cover:"" });
+      setForm({ author: "", title: "", content: "", cover: "" });
       fetchPosts();
     } catch (error) {
       console.error("Error creating post:", error);
@@ -57,8 +58,8 @@ export const PostsProvider = ({ children }) => {
   };
 
   const handleUpdate = async (e) => {
-    e.preventDefault()
-    console.log(form)
+    e.preventDefault();
+    console.log(form);
     try {
       await axios.put(`${VITE_BASE_URL}/posts/${form.id}`, {
         author: form.author,
@@ -66,7 +67,7 @@ export const PostsProvider = ({ children }) => {
         content: form.content,
         cover: form.cover,
       });
-      setForm({ author: "", title: "", content: "", cover:"" });
+      setForm({ author: "", title: "", content: "", cover: "" });
       fetchPosts();
     } catch (error) {
       console.error("Error updating post:", error);
@@ -81,7 +82,6 @@ export const PostsProvider = ({ children }) => {
       console.error("Error deleting post:", error);
     }
   };
-  
 
   return (
     <PostsContext.Provider
