@@ -1,104 +1,75 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { usePosts } from "../context/PostsContext";
+import { useNavigate } from "react-router-dom";
 
-const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
-
-const EditPost = () => {
-  const { id } = useParams();
+function EditPost() {
+  const { handleUpdate, form, handleChange } = usePosts();
   const navigate = useNavigate();
-  const [form, setForm] = useState({
-    title: "",
-    content: "",
-  });
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const response = await axios.get(`${VITE_BASE_URL}/posts/${id}`);
-        setForm({
-          title: response.data.title,
-          content: response.data.content,
-        });
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching post:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchPost();
-  }, [id]);
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.put(`${VITE_BASE_URL}/posts/${id}`, form);
-      console.log(`Post with id ${id} updated`);
-      navigate(`/post/${id}`);
-    } catch (error) {
-      console.error("Error updating post:", error);
-    }
-  };
-
-  if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <h2>Edit Post</h2>
-      <form
-        onSubmit={handleUpdate}
-        className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md"
-      >
-        <div className="mb-4">
-          <label
-            htmlFor="title"
-            className="block text-sm font-semibold text-gray-700"
-          >
-            Title
-          </label>
+    <div className="container mx-auto p-4 w-1/3 mt-16">
+      <h1 className="text-3xl font-bold mb-4 text-center text-white">
+        Edit Post
+      </h1>
+      <form onSubmit={handleUpdate} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-white">Author</label>
           <input
             type="text"
-            id="title"
-            name="title"
-            value={form.title}
+            name="author"
+            placeholder="Author"
+            value={form.author}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md"
+            className="mt-1 p-2 block w-full border rounded"
             required
           />
         </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="content"
-            className="block text-sm font-semibold text-gray-700"
-          >
-            Content
-          </label>
+        <div>
+          <label className="block text-sm font-medium text-white">Title</label>
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            value={form.title}
+            onChange={handleChange}
+            className="mt-1 p-2 block w-full border rounded"
+            required
+          />
+        </div>
+        <div>
+          <label>Content</label>
           <textarea
-            id="content"
             name="content"
             value={form.content}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md"
+            className="mt-1 p-2 block w-full border rounded"
             required
           />
         </div>
-
-        <button
-          type="submit"
-          className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-        >
-          Update Post
-        </button>
+        <div>
+          <label className="block text-sm font-medium text-white">Cover</label>
+          <input
+            type="text"
+            name="cover"
+            placeholder="Cover"
+            value={form.cover}
+            onChange={handleChange}
+            className="mt-1 p-2 block w-full border rounded"
+            required
+          />
+        </div>
+        <div className="text-center">
+          <button 
+            onClick={() => navigate("/")}
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded"
+          >
+            Update
+            
+          </button>
+        </div>
       </form>
     </div>
   );
-};
+}
 
 export default EditPost;

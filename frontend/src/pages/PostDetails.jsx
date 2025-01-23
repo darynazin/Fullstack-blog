@@ -1,61 +1,61 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import PostInfo from "../components/PostInfo";
-import DeleteButton from "../components/DeleteButton";
-import UpdateButton from "../components/UpdateButton";
+import { usePosts } from "../context/PostsContext";
 
-const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
 
-const PostDetails = () => {
+function PostDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { posts, handleDelete, setUpdateForm } = usePosts();
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const response = await axios.get(`${VITE_BASE_URL}/posts/${id}`);
-        setPost(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching post:", error);
-        setLoading(false);
-      }
-    };
 
-    fetchPost();
-  }, [id]);
+  const post = posts.find((item) => item.id === parseInt(id, 10));
 
-  const handleDelete = async () => {
-    try {
-      await axios.delete(`${VITE_BASE_URL}/posts/${id}`);
-      console.log(`Post with id ${id} deleted`);
-      navigate("/");
-    } catch (error) {
-      console.error("Error deleting post:", error);
-    }
+  if (!post) {
+    return <p className="text-center text-gray-500">Post not found.</p>;
+  }
+
+  const handleEdit = () => {
+    navigate(`/edit-post/${id}`);
   };
 
-  const handleUpdate = () => {
-    console.log(`Navigating to edit post with id ${id}`);
-    navigate(`/edit/${id}`);
+  const handleClose = () => {
+    navigate("/");
   };
-
-  if (loading) return <div>Loading...</div>;
-
-  if (!post) return <div>Post not found</div>;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <PostInfo post={post} />
-      <div className="flex justify-between mt-4">
-        <DeleteButton onClick={handleDelete} />
-        <UpdateButton onClick={handleUpdate} />
+    <div className="min-h-screen bg-[#F8F2EA] flex flex-col items-center py-10">
+      <div className="card bg-[#F8F2EA]  w-1/2 shadow-xl mb-5 relative">
+        <button
+          onClick={handleClose}
+          className="absolute top-2 right-2 text-white bg-gray-800 rounded-full px-2 focus:outline-none"
+        >
+          &times;
+        </button>
+
+        <figure className="h-[40rem] w-full overflow-hidden">
+          <img
+            src={post.cover}
+            alt={post.title}
+            className="h-full w-full object-cover"
+          />
+        </figure>
+        <div className="card-body">
+          <h2 className="card-title">{post.title}</h2>
+          <p>{post.content}</p>
+          <p>Author {post.author}</p>
+          <p>{post.date.substring(0, 10)}</p>
+        </div>
+        <div className="card-actions flex flex-row justify-end items-end p-4">
+          <button onClick={() => {handleEdit(); setUpdateForm(post)}} className="btn bg-[#D9C5A8] mr-2">
+            Edit
+          </button>
+          <button onClick={handleDelete} className="btn btn-error">
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default PostDetails;
