@@ -49,7 +49,7 @@ function PostDetails() {
               handleEdit();
               setUpdateForm(post);
             }}
-            className="btn bg-[#D9C5A8] mr-2"
+            className="btn bg-[#D9C5A8] mr-2 hover:bg-[#D9C5A8]"
           >
             Edit
           </button>
