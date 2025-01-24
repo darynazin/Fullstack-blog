@@ -21,7 +21,7 @@ function PostDetails() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F2EA] flex flex-col items-center py-10">
+    <div className="min-h-screen flex flex-col items-center py-10">
       <div className="card bg-[#F8F2EA] w-1/2 shadow-xl mb-5 relative">
         <button
           onClick={handleClose}
